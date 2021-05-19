@@ -2,6 +2,12 @@ import './App.css';
 import PersistentDrawerRight from './components/drawer';
 import MainImage from './components/mainImage';
 import { Search } from './components/search';
+import { Admin } from './components/admin';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 const mainFeaturedPost = {
   title: 'Title of a longer featured blog post',
@@ -15,9 +21,20 @@ const mainFeaturedPost = {
 function App() {
   return (
     <div className="App">
-      <PersistentDrawerRight/>
-      <MainImage post={mainFeaturedPost}/>
-      <Search/>
+
+
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <PersistentDrawerRight />
+            <MainImage post={mainFeaturedPost} />
+            <Search />
+          </Route>
+          <Route path="/admin">
+            <Admin />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

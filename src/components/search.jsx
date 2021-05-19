@@ -31,11 +31,42 @@ export const Search = () => {
       <div 
       style={{
           display: 'flex',
-          justifyContent: 'center',
-          
+          justifyContent: 'space-around',
+          flexDirection: window.innerWidth < 660 ? 'column' : null,
+          padding: window.innerWidth < 660 ? '20px' : null
       }}
       >
       <TextField
+          id="outlined-select-currency"
+          select
+          label="סוג רכב"
+          value={currency}
+          onChange={handleChange}
+          helperText="בחר בבקשה את סוג הרכב שברצונך לבדוק"
+          variant="outlined"
+        >
+          {currencies.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id="outlined-select-currency"
+          select
+          label="סוג רכב"
+          value={currency}
+          onChange={handleChange}
+          helperText="בחר בבקשה את סוג הרכב שברצונך לבדוק"
+          variant="outlined"
+        >
+          {currencies.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
           id="outlined-select-currency"
           select
           label="סוג רכב"
