@@ -2,11 +2,10 @@ const express = require("express")
 const Car = require('./schema');
 const router = express.Router()
 
-// Get all posts
-router.post("/test", async (req, res) => {
+// add car
+router.post("/addcar", async (req, res) => {
   const { name, modal, year } = req.body;
   try {
-
 	const car = new Car();
 	car.name = name;
 	car.modal = modal;

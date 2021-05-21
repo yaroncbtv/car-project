@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { carInfo as carInfoAtom } from "./atoms";
+import { carName as carNameAtom } from "./atoms/atoms";
+import { carModal as carModalAtom } from "./atoms/atoms";
+import { carYear as carYearAtom } from "./atoms/atoms";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import { postCar } from './api/api';
 const currencies = [
     {
         value: 'פיאט',
@@ -25,18 +28,24 @@ const currencies = [
 
 
 export const Admin = () => {
-    // const [textState, setTextState] = useRecoilState(carInfoAtom);
+    const [carName, setCarName] = useRecoilState(carNameAtom);
+    const [carModal, setCarModal] = useRecoilState(carModalAtom);
+    const [carYear, setCarYear] = useRecoilState(carYearAtom);
+
     const [currency, setCurrency] = React.useState('');
 
     const handleChange = (event) => {
         setCurrency(event.target.value);
     };
-
-    // useEffect(() => {
-    //     setTextState('33333')
-    // }, []);
-
-
+    const addCar = async () => {
+        const objCar = {
+            name : carName,
+            modal : carModal,
+            year : carYear
+        }
+       const postCarRes = await postCar(objCar);
+       console.log(postCarRes)
+    }
     return (
         <div style={style.root}>
             <div style={style.spaceVertical}>
@@ -94,12 +103,12 @@ export const Admin = () => {
 
             </div>
             <div style={style.spaceVerticalv} >
-                <TextField style={style.spaceHorizontal} id="outlined-basic2" label="סוג רכב" variant="outlined" />
-                <TextField style={style.spaceHorizontal} id="outlined-basic2" label="דגם" variant="outlined" />
-                <TextField style={style.spaceHorizontal} id="outlined-basic3" label="שנה" variant="outlined" />
+                <TextField onChange={e => setCarName(e.target.value)} style={style.spaceHorizontal} id="outlined-basic2" label="סוג רכב" variant="outlined" />
+                <TextField onChange={e => setCarModal(e.target.value)} style={style.spaceHorizontal} id="outlined-basic2" label="דגם" variant="outlined" />
+                <TextField onChange={e => setCarYear(e.target.value)} style={style.spaceHorizontal} id="outlined-basic3" label="שנה" variant="outlined" />
             </div>
             <div style={style.spaceVerticalv}>
-                <Button variant="contained" color="primary">
+                <Button onClick={addCar} variant="contained" color="primary">
                     הוסף
                 </Button>
             </div>
