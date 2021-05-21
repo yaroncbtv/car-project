@@ -2,12 +2,15 @@ import './App.css';
 import PersistentDrawerRight from './components/drawer';
 import MainImage from './components/mainImage';
 import { Search } from './components/search';
-import { Admin } from './components/admin';
+import { Admin } from './components/admin.jsx';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
+import {
+  RecoilRoot,
+} from 'recoil';
 
 const mainFeaturedPost = {
   title: 'Title of a longer featured blog post',
@@ -18,11 +21,13 @@ const mainFeaturedPost = {
   linkText: 'Continue reading…',
 };
 
+
+
+
 function App() {
   return (
+    <RecoilRoot>
     <div className="App">
-
-
       <Router>
         <Switch>
           <Route exact path="/">
@@ -36,6 +41,7 @@ function App() {
         </Switch>
       </Router>
     </div>
+    </RecoilRoot>
   );
 }
 

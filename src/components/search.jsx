@@ -26,8 +26,8 @@ export const Search = () => {
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
-  console.log(currency)
-    return (
+
+  return (
       <div 
       style={{
           display: 'flex',

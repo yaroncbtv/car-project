@@ -10,7 +10,9 @@ db.once('open', function() {
 
 const ListSchema = new Schema({
     name : { type: String, required: true, trim: true },
-    description : { type: String, trim: true }
+    modal : { type: String, trim: true },
+    year : { type: String, trim: true },
+
 });
 
 module.exports = mongoose.model('List', ListSchema);
