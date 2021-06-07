@@ -1,41 +1,48 @@
 import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilStateLoadable } from "recoil";
 import { carName as carNameAtom } from "./atoms/atoms";
 import { carModal as carModalAtom } from "./atoms/atoms";
 import { carYear as carYearAtom } from "./atoms/atoms";
+//import { allCar as allCarsAtom } from "./atoms/atoms";
+import { CarsListState as CarsListStateAtom } from "./atoms/atoms";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { postCar } from './api/api';
-const currencies = [
-    {
-        value: 'פיאט',
-        label: 'פיאט',
-    },
-    {
-        value: 'רנו',
-        label: 'רנו',
-    },
-    {
-        value: 'ניסאן',
-        label: 'ניסאן',
-    },
-    {
-        value: 'פיגו',
-        label: 'פיגו',
-    },
-];
-
+// import { allCar } from './api/api';
 
 export const Admin = () => {
     const [carName, setCarName] = useRecoilState(carNameAtom);
     const [carModal, setCarModal] = useRecoilState(carModalAtom);
     const [carYear, setCarYear] = useRecoilState(carYearAtom);
+    //const [allCars, setAllCars] = useRecoilState(CarsListStateAtom);
+    const [allCars, setAllCars] = useRecoilStateLoadable(CarsListStateAtom);
 
-    const [currency, setCurrency] = React.useState('');
+    useEffect(()  => {
+        // const fetchData = async () => {
+        //     const cars = await allCar();
+        //     await setAllCars(cars)
+        //   }
 
-    const handleChange = (event) => {
-        setCurrency(event.target.value);
+          //fetchData();
+    },[]);
+    // Object.values(allCars.contents).forEach(val => console.log(val.modal));
+    
+    
+    //console.log(allCars.contents.data)
+    if(allCars.contents.data){
+        //allCars.contents.data.map(data => console.log(data.modal))
+    }    
+    
+
+    const handleChangeCarName = (event) => {
+        setCarName(event.target.value);
+    };
+    const handleChangeCarModal = (event) => {
+        setCarModal(event.target.value);
+    };
+    const handleChangeSetCarYear = (event) => {
+        setCarYear(event.target.value);
     };
     const addCar = async () => {
         const objCar = {
@@ -43,8 +50,8 @@ export const Admin = () => {
             modal : carModal,
             year : carYear
         }
-       const postCarRes = await postCar(objCar);
-       console.log(postCarRes)
+        
+       await postCar(objCar);
     }
     return (
         <div style={style.root}>
@@ -55,16 +62,16 @@ export const Admin = () => {
                     id="typeCar"
                     select
                     label="סוג רכב"
-                    value={currency}
-                    onChange={handleChange}
+                    value={carName}
+                    onChange={handleChangeCarName}
                     helperText="בחר בבקשה את סוג הרכב "
                     variant="outlined"
                 >
-                    {currencies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                    {allCars.contents.data ? allCars.contents.data.map((option) => (
+                        <MenuItem key={option.name} value={option.name}>
+                            {option.name}
                         </MenuItem>
-                    ))}
+                    )): null}
                 </TextField>
 
                 <TextField
@@ -72,16 +79,16 @@ export const Admin = () => {
                     id="modal"
                     select
                     label="דגם"
-                    value={currency}
-                    onChange={handleChange}
+                    value={carModal}
+                    onChange={handleChangeCarModal}
                     helperText="בחר בבקשה את דגם הרכב"
                     variant="outlined"
                 >
-                    {currencies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                    {allCars.contents.data ? allCars.contents.data.map((option) => (
+                        <MenuItem key={option.name} value={option.modal}>
+                            {option.modal}
                         </MenuItem>
-                    ))}
+                    )): null}
                 </TextField>
 
                 <TextField
@@ -89,16 +96,16 @@ export const Admin = () => {
                     id="year"
                     select
                     label="שנה"
-                    value={currency}
-                    onChange={handleChange}
+                    value={carYear}
+                    onChange={handleChangeSetCarYear}
                     helperText="בחר בבקשה את שנת הרכב"
                     variant="outlined"
                 >
-                    {currencies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                    {allCars.contents.data ? allCars.contents.data.map((option) => (
+                        <MenuItem key={option.name} value={option.year}>
+                            {option.year}
                         </MenuItem>
-                    ))}
+                    )): null}
                 </TextField>
 
             </div>

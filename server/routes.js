@@ -16,6 +16,16 @@ router.post("/addcar", async (req, res) => {
   } catch (error) {
 	  res.send(error);
   }
-})
+});
+
+router.get("/getallcar", async (req, res) => {
+	Car.find({}, function(err, cars) {
+		let carMap = {data:[]};
+		cars.forEach(function(car) {
+			carMap.data.push(car);
+		});
+		res.send(carMap);  
+	  });
+  })
 
 module.exports = router
